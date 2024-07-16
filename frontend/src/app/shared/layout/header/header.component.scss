@@ -1,0 +1,134 @@
+@import "../../../../assets/styles/variables";
+
+.header {
+  padding: 30px 0 49px 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-top {
+      padding-top: 32px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #c5c5c5;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      //   font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+
+      .header-top-menu {
+        margin-left: 26px;
+        margin-right: 231px;
+
+        nav ul {
+          display: flex;
+          gap: 40px;
+          align-items: center;
+
+          li {
+            border-bottom: 1px solid transparent;
+
+            &.active {
+              border-bottom-color: $base-text-color;
+            }
+
+            a {
+              color: $base-text-color;
+            }
+          }
+        }
+      }
+
+      .header-top-phone {
+        color: $base-text-color;
+        margin-right: 59px;
+      }
+
+      .header-top-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-right: 18px;
+
+        a {
+          position: relative;
+
+          span {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 10px;
+            right: -18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+
+            color: $base-text-color;
+            font-size: 9px;
+            background-color: #b6d5b9;
+          }
+        }
+      }
+    }
+
+    .header-bottom {
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+
+      .header-bottom-menu {
+        margin-left: 26px;
+        margin-right: 147px;
+
+        nav ul {
+          display: flex;
+          gap: 50px;
+          align-items: center;
+
+          li {
+            border-bottom: 1px solid transparent;
+
+            &.active {
+              border-bottom-color: $base-text-color;
+            }
+
+            a {
+              font-size: 16px;
+              color: $base-text-color;
+            }
+          }
+        }
+      }
+
+      .header-bottom-search {
+        position: relative;
+
+        input {
+          width: 214px;
+          height: 41px;
+          border: 1px solid $base-text-color;
+          border-radius: 30px;
+          padding: 10px 10px 10px 43px;
+          font-size: 16px;
+          color: $base-text-color;
+          outline: none;
+        }
+
+        &::after {
+          content: "";
+          background-image: url(../../../../assets/images/icons/search.png);
+          background-size: cover;
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          left: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}
