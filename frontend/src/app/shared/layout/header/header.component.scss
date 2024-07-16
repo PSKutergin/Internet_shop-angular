@@ -31,18 +31,18 @@
             border-bottom: 1px solid transparent;
 
             &.active {
-              border-bottom-color: $base-text-color;
+              border-bottom-color: $green-text-color;
             }
 
             a {
-              color: $base-text-color;
+              color: $green-text-color;
             }
           }
         }
       }
 
       .header-top-phone {
-        color: $base-text-color;
+        color: $green-text-color;
         margin-right: 59px;
       }
 
@@ -66,7 +66,7 @@
             justify-content: center;
             border-radius: 50%;
 
-            color: $base-text-color;
+            color: $green-text-color;
             font-size: 9px;
             background-color: #b6d5b9;
           }
@@ -92,12 +92,12 @@
             border-bottom: 1px solid transparent;
 
             &.active {
-              border-bottom-color: $base-text-color;
+              border-bottom-color: $green-text-color;
             }
 
             a {
               font-size: 16px;
-              color: $base-text-color;
+              color: $green-text-color;
             }
           }
         }
@@ -109,11 +109,11 @@
         input {
           width: 214px;
           height: 41px;
-          border: 1px solid $base-text-color;
+          border: 1px solid $green-text-color;
           border-radius: 30px;
           padding: 10px 10px 10px 43px;
           font-size: 16px;
-          color: $base-text-color;
+          color: $green-text-color;
           outline: none;
         }
 
