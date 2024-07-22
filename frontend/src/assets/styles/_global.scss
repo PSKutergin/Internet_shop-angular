@@ -30,3 +30,45 @@ button {
   max-width: $container-width;
   margin: 0 auto;
 }
+
+.input {
+  padding: 17px 20px;
+  border: 2px solid #2a592e;
+  border-radius: 3px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: $gray-text-color;
+  outline: none;
+
+  &::placeholder {
+    color: #a8aba7;
+  }
+}
+
+.button {
+  text-align: center;
+  padding: 15px;
+  background-color: #456f49;
+  border-radius: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+  border: 0;
+
+  &:disabled {
+    background-color: #a8aba7;
+    cursor: not-allowed;
+  }
+}
+
+.mat-menu-item {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+
+  a {
+    text-decoration: none;
+    color: $gray-text-color;
+  }
+}
