@@ -11,6 +11,10 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+  getProducts(): Observable<{ totalCount: number, pages: number, items: ProductType[] }> {
+    return this.http.get<{ totalCount: number, pages: number, items: ProductType[] }>(environment.api + 'products');
+  }
+
   getBestProducts(): Observable<ProductType[]> {
     return this.http.get<ProductType[]>(environment.api + 'products/best');
   }
