@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { CategoryType } from 'src/app/types/category.type';
+import { CategoryWithTypeType } from 'src/app/types/category-with-type.type';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,7 @@ import { CategoryType } from 'src/app/types/category.type';
 export class HeaderComponent implements OnInit {
 
   isLogged: boolean = false;
-  @Input() categories: CategoryType[] = [];
+  @Input() categories: CategoryWithTypeType[] = [];
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {
     this.isLogged = this.authService.getIsLoggedIn();

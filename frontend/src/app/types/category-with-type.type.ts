@@ -7,4 +7,5 @@ export type CategoryWithTypeType = {
         name: string,
         url: string
     }[];
+    typesUrl?: string[];
 }

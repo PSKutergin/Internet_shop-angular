@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { ActiveParamsUtil } from 'src/app/shared/utils/active-params.util';
@@ -35,51 +36,55 @@ export class CatalogComponent implements OnInit {
       .subscribe((data: CategoryWithTypeType[]) => {
         this.categoriesWithTypes = data
 
-        this.activatedRoute.queryParams.subscribe((params) => {
-          this.activeParams = ActiveParamsUtil.processParams(params as ActiveParamsType);
+        this.activatedRoute.queryParams
+          .pipe(
+            debounceTime(500)
+          )
+          .subscribe((params) => {
+            this.activeParams = ActiveParamsUtil.processParams(params as ActiveParamsType);
 
-          this.appliedFilters = [];
-          this.activeParams.types.forEach((url) => {
-            for (let i = 0; i < this.categoriesWithTypes.length; i++) {
-              const foundType = this.categoriesWithTypes[i].types.find((type) => type.url === url);
-              if (foundType) {
-                this.appliedFilters.push({
-                  name: foundType.name,
-                  urlParam: foundType.url
-                });
+            this.appliedFilters = [];
+            this.activeParams.types.forEach((url) => {
+              for (let i = 0; i < this.categoriesWithTypes.length; i++) {
+                const foundType = this.categoriesWithTypes[i].types.find((type) => type.url === url);
+                if (foundType) {
+                  this.appliedFilters.push({
+                    name: foundType.name,
+                    urlParam: foundType.url
+                  });
+                }
               }
-            }
-          });
-
-          if (this.activeParams.heightFrom) this.appliedFilters.push({
-            name: 'Высота от ' + this.activeParams.heightFrom + ' см',
-            urlParam: 'heightFrom'
-          });
-
-          if (this.activeParams.heightTo) this.appliedFilters.push({
-            name: 'Высота до ' + this.activeParams.heightTo + ' см',
-            urlParam: 'heightTo'
-          });
-
-          if (this.activeParams.diameterFrom) this.appliedFilters.push({
-            name: 'Диаметр от ' + this.activeParams.diameterFrom + ' см',
-            urlParam: 'diameterFrom'
-          });
-
-          if (this.activeParams.diameterTo) this.appliedFilters.push({
-            name: 'Диаметр до ' + this.activeParams.diameterTo + ' см',
-            urlParam: 'diameterTo'
-          });
-
-          this.productService.getProducts(this.activeParams)
-            .subscribe((data: { totalCount: number, pages: number, items: ProductType[] }) => {
-              this.pages = [];
-              for (let i = 1; i <= data.pages; i++) {
-                this.pages.push(i);
-              }
-              this.products = data.items;
             });
-        });
+
+            if (this.activeParams.heightFrom) this.appliedFilters.push({
+              name: 'Высота от ' + this.activeParams.heightFrom + ' см',
+              urlParam: 'heightFrom'
+            });
+
+            if (this.activeParams.heightTo) this.appliedFilters.push({
+              name: 'Высота до ' + this.activeParams.heightTo + ' см',
+              urlParam: 'heightTo'
+            });
+
+            if (this.activeParams.diameterFrom) this.appliedFilters.push({
+              name: 'Диаметр от ' + this.activeParams.diameterFrom + ' см',
+              urlParam: 'diameterFrom'
+            });
+
+            if (this.activeParams.diameterTo) this.appliedFilters.push({
+              name: 'Диаметр до ' + this.activeParams.diameterTo + ' см',
+              urlParam: 'diameterTo'
+            });
+
+            this.productService.getProducts(this.activeParams)
+              .subscribe((data: { totalCount: number, pages: number, items: ProductType[] }) => {
+                this.pages = [];
+                for (let i = 1; i <= data.pages; i++) {
+                  this.pages.push(i);
+                }
+                this.products = data.items;
+              });
+          });
       });
   }
 
