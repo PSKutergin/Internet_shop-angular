@@ -1,5 +1,5 @@
-<section class="catalog-filter" [ngClass]="{open: open}" *ngIf="categoryWithTypes" (click)="toggle()">
-    <section class="catalog-filter-head">
+<section class="catalog-filter" [class.open]="open" *ngIf="categoryWithTypes">
+    <section class="catalog-filter-head" (click)="toggle()">
         <span>{{title}}</span>
         <svg *ngIf="open" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -14,28 +14,36 @@
     </section>
     <section class="catalog-filter-body">
         <label class="catalog-filter-checkbox" *ngFor="let type of categoryWithTypes.types">
-            <input type="checkbox" #checkbox (change)="updateFilterParam(type.url, checkbox.checked)">
+            <input type="checkbox" #checkbox [checked]="activeParams.types.includes(type.url)"
+                (change)="updateFilterParam(type.url, checkbox.checked)">
             <span>{{type.name}}</span>
         </label>
     </section>
 </section>
 
 
-<section class="catalog-filter" [ngClass]="{open: open}" *ngIf="type" (click)="toggle()">
-    <section class="catalog-filter-head">
+<section class="catalog-filter" [class.open]="open" *ngIf="type">
+    <section class=" catalog-filter-head" (click)="toggle()">
         <span>{{title}}</span>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg *ngIf="open" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M9.99974 5.99997C10.5831 5.99997 11.1664 6.22497 11.6081 6.66663L17.0414 12.1C17.2831 12.3416 17.2831 12.7416 17.0414 12.9833C16.7997 13.225 16.3997 13.225 16.1581 12.9833L10.7247 7.54997C10.3247 7.14997 9.67474 7.14997 9.27474 7.54997L3.84141 12.9833C3.59974 13.225 3.19974 13.225 2.95807 12.9833C2.71641 12.7416 2.71641 12.3416 2.95807 12.1L8.39141 6.66663C8.83307 6.22497 9.41641 5.99997 9.99974 5.99997Z"
+                fill="#2C2C2C" />
+        </svg>
+        <svg *ngIf="!open" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M10.0003 14C9.41693 14 8.83359 13.775 8.39193 13.3334L2.95859 7.90003C2.71693 7.65837 2.71693 7.25837 2.95859 7.0167C3.20026 6.77503 3.60026 6.77503 3.84193 7.0167L9.27526 12.45C9.67526 12.85 10.3253 12.85 10.7253 12.45L16.1586 7.0167C16.4003 6.77503 16.8003 6.77503 17.0419 7.0167C17.2836 7.25837 17.2836 7.65837 17.0419 7.90003L11.6086 13.3334C11.1669 13.775 10.5836 14 10.0003 14Z"
                 fill="#2C2C2C" />
         </svg>
     </section>
     <section class="catalog-filter-body">
         <section class="catalog-filter-range">
             <span>от</span>
-            <input type="number" min="0" step="1" class="small-input">
+            <input type="number" min="0" step="1" class="small-input" [ngModel]="from"
+                (ngModelChange)="updateFilterParamFromTo(type + 'From', $event)">
             <span>до</span>
-            <input type="number" min="0" step="1" class="small-input">
+            <input type="number" min="0" step="1" class="small-input" [ngModel]="to"
+                (ngModelChange)="updateFilterParamFromTo(type + 'To', $event)">
             <span>см</span>
         </section>
     </section>

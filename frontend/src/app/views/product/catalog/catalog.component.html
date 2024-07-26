@@ -4,9 +4,9 @@
 
         <section class="catalog-head">
             <section class="catalog-applied-filters">
-                <section class="catalog-applied-filter">
-                    <span>Сукуленты</span>
-                    <a>
+                <section class="catalog-applied-filter" *ngFor="let filter of appliedFilters">
+                    <span>{{filter.name}}</span>
+                    <a (click)="removeAppliedFilter(filter)">
                         <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line x1="0.935622" y1="1.1499" x2="12.9564" y2="13.1707" stroke="#A8ABA7"
                                 stroke-linecap="round" />
@@ -17,7 +17,7 @@
                 </section>
             </section>
 
-            <section class="catalog-sorting">
+            <section class="catalog-sorting" [class.open]="sortingOpen" (click)="toggleSorting()">
                 <section class="catalog-sorting-head">
                     <span>Сортировка</span>
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,10 +28,11 @@
                 </section>
 
                 <section class="catalog-sorting-body">
-                    <section class="catalog-sorting-item active">От А до Я</section>
-                    <section class="catalog-sorting-item">От Я до А</section>
-                    <section class="catalog-sorting-item">По возрастанию цены</section>
-                    <section class="catalog-sorting-item">По убыванию цены</section>
+                    <section class="catalog-sorting-item" *ngFor="let sortingOption of sortingOptions"
+                        (click)="sort(sortingOption.value)" [class.active]="this.activeParams.sort ? this.activeParams.sort === sortingOption.value :
+                        false">
+                        {{sortingOption.name}}
+                    </section>
                 </section>
             </section>
         </section>
