@@ -25,14 +25,15 @@ export class CatalogComponent implements OnInit {
     { name: 'От Я до А', value: 'az-desc' },
     { name: 'По возрастанию цены', value: 'price-asc' },
     { name: 'По убыванию цены', value: 'price-desc' }
-  ]
+  ];
+  pages: number[] = [];
 
   constructor(private productService: ProductService, private categoryService: CategoryService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.productService.getProducts()
-      .subscribe((data: { totalCount: number, pages: number, items: ProductType[] }) => {
-        this.products = data.items
+    this.categoryService.getCategoriesWithTypes()
+      .subscribe((data: CategoryWithTypeType[]) => {
+        this.categoriesWithTypes = data
 
         this.activatedRoute.queryParams.subscribe((params) => {
           this.activeParams = ActiveParamsUtil.processParams(params as ActiveParamsType);
@@ -69,11 +70,17 @@ export class CatalogComponent implements OnInit {
             name: 'Диаметр до ' + this.activeParams.diameterTo + ' см',
             urlParam: 'diameterTo'
           });
+
+          this.productService.getProducts(this.activeParams)
+            .subscribe((data: { totalCount: number, pages: number, items: ProductType[] }) => {
+              this.pages = [];
+              for (let i = 1; i <= data.pages; i++) {
+                this.pages.push(i);
+              }
+              this.products = data.items;
+            });
         });
       });
-
-    this.categoryService.getCategoriesWithTypes()
-      .subscribe((data: CategoryWithTypeType[]) => this.categoriesWithTypes = data);
   }
 
   removeAppliedFilter(filter: AppliedFilterType): void {
@@ -82,7 +89,7 @@ export class CatalogComponent implements OnInit {
     } else {
       this.activeParams.types = this.activeParams.types.filter((type) => type !== filter.urlParam);
     }
-
+    this.activeParams.page = 1;
     this.router.navigate(['/catalog'], { queryParams: this.activeParams });
   }
 
@@ -93,5 +100,24 @@ export class CatalogComponent implements OnInit {
   sort(sorting: string): void {
     this.activeParams.sort = sorting;
     this.router.navigate(['/catalog'], { queryParams: this.activeParams });
+  }
+
+  openPage(page: number): void {
+    this.activeParams.page = page;
+    this.router.navigate(['/catalog'], { queryParams: this.activeParams });
+  }
+
+  openPrevPage(): void {
+    if (this.activeParams.page && this.activeParams.page > 1) {
+      this.activeParams.page--;
+      this.router.navigate(['/catalog'], { queryParams: this.activeParams });
+    }
+  }
+
+  openNextPage(): void {
+    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+      this.activeParams.page++;
+      this.router.navigate(['/catalog'], { queryParams: this.activeParams });
+    }
   }
 }

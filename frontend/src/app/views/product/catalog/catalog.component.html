@@ -50,8 +50,9 @@
             </section>
         </section>
 
-        <section class="pagination">
-            <section class="pagination-arrow">
+        <section class="pagination" *ngIf="pages.length > 1">
+            <section class="pagination-arrow" [class.disabled]="activeParams.page ? +activeParams.page === 1 : true"
+                (click)="openPrevPage()">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M9.56988 5.98092C9.75988 5.98092 9.94988 6.04973 10.0999 6.19717C10.3899 6.48223 10.3899 6.95405 10.0999 7.2391L4.55988 12.6847L10.0999 18.1303C10.3899 18.4153 10.3899 18.8871 10.0999 19.1722C9.80988 19.4573 9.32988 19.4573 9.03988 19.1722L2.96988 13.2056C2.67988 12.9206 2.67988 12.4488 2.96988 12.1637L9.03988 6.19717C9.18988 6.04973 9.37988 5.98092 9.56988 5.98092Z"
@@ -63,14 +64,16 @@
             </section>
 
             <section class="pagination-pages">
-                <span class="pagination-page active">1</span>
-                <span class="pagination-page">2</span>
-                <span class="pagination-page">3</span>
-                <span class="pagination-page">4</span>
-                <span class="pagination-page">5</span>
+                <a class="pagination-page"
+                    [class.active]="this.activeParams.page ? +this.activeParams.page === +page : (+page === 1)"
+                    (click)="openPage(page)" *ngFor="let page of pages">
+                    {{page}}
+                </a>
             </section>
 
-            <section class="pagination-arrow">
+            <section class="pagination-arrow"
+                [class.disabled]="activeParams.page ? +activeParams.page === pages.length : false"
+                (click)="openNextPage()">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M14.4301 19.3885C14.2401 19.3885 14.0501 19.3197 13.9001 19.1722C13.6101 18.8872 13.6101 18.4153 13.9001 18.1303L19.4401 12.6847L13.9001 7.23913C13.6101 6.95407 13.6101 6.48225 13.9001 6.19719C14.1901 5.91213 14.6701 5.91213 14.9601 6.19719L21.0301 12.1637C21.3201 12.4488 21.3201 12.9206 21.0301 13.2057L14.9601 19.1722C14.8101 19.3197 14.6201 19.3885 14.4301 19.3885Z"
