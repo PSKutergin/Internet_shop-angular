@@ -80,6 +80,19 @@ input[type="number"] {
   color: #fff;
   border: 0;
 
+  &.button-transparent {
+    background-color: transparent;
+    color: $green-text-color;
+    border: 1px solid #6cac72;
+  }
+
+  &.button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
   &:disabled {
     background-color: #a8aba7;
     cursor: not-allowed;
@@ -97,5 +110,23 @@ a.button {
   a {
     text-decoration: none;
     color: $gray-text-color;
+  }
+}
+
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+
+  .carousel-title {
+    @include head-lora-32;
+  }
+
+  .carousel-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
   }
 }
