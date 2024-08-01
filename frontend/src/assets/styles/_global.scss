@@ -93,6 +93,28 @@ input[type="number"] {
     gap: 16px;
   }
 
+  &.button-in-cart span {
+    &:first-child {
+      display: block;
+    }
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  &:hover {
+    &.button-in-cart span {
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        display: block;
+      }
+    }
+  }
+
   &:disabled {
     background-color: #a8aba7;
     cursor: not-allowed;

@@ -1,5 +1,6 @@
-<section class="product-card" *ngIf="product">
-    <section class="product-card-favorite">
+<section class="product-card" *ngIf="product" [routerLink]="isLight ? ['/product/' + product.url] : []"
+    [class.is-light]="isLight">
+    <section class="product-card-favorite" *ngIf="!isLight">
         <!-- <span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -25,18 +26,22 @@
         {{ product.name }}
     </section>
 
-    <section class="product-card-info">
+    <section class="product-card-info" *ngIf="!isLight">
         <section class="product-card-price">
             {{ product.price }} BYN
         </section>
 
         <section class="product-card-action">
-            <button class="button">В корзину</button>
+            <button class="button" *ngIf="!countInCart" (click)="addToCart()">В корзину</button>
+            <button class="button button-transparent button-in-cart" *ngIf="countInCart" (click)="removeFromCart()">
+                <span>В корзине</span>
+                <span>Удалить</span>
+            </button>
         </section>
     </section>
 
-    <section class="product-card-extra">
-        <count-selector></count-selector>
+    <section class="product-card-extra" *ngIf="!isLight">
+        <count-selector [count]="count" (onCountChange)="updateCount($event)"></count-selector>
 
         <a [routerLink]="'/product/' + product.url" class="product-card-detail">
             <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">

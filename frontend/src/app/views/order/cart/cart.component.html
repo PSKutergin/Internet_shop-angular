@@ -1,0 +1,82 @@
+<section class="cart" *ngIf="cart">
+    <section class="container">
+        <section class="cart-title">Корзина</section>
+        <section class="cart-empty" *ngIf="!cart || cart.items.length === 0">
+            <section class="">Ваша корзина пуста</section>
+            <button class="button" routerLink="/catalog">Перейти в каталог</button>
+        </section>
+        <section class="cart-info" *ngIf="cart && cart.items.length > 0">
+            <section class="cart-products">
+                <section class="cart-product" *ngFor="let cartProduct of cart.items">
+                    <section class="cart-product-image"
+                        style="background-image: url({{serverStaticPath + cartProduct.product.image}})"></section>
+                    <section class="cart-product-name">{{ cartProduct.product.name }}</section>
+
+                    <count-selector [count]="cartProduct.quantity"
+                        (onCountChange)="updateCount(cartProduct.product.id, $event)"></count-selector>
+
+                    <section class="cart-product-price">{{ cartProduct.product.price }} BYN</section>
+                    <section class="cart-product-remove" (click)="updateCount(cartProduct.product.id, 0)">
+                        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0.935622" y1="1.50635" x2="12.9564" y2="13.5272" stroke="#A8ABA7"
+                                stroke-linecap="round" />
+                            <line x1="12.9238" y1="1.4864" x2="0.903013" y2="13.5072" stroke="#A8ABA7"
+                                stroke-linecap="round" />
+                        </svg>
+                    </section>
+                </section>
+            </section>
+
+            <section class="cart-details">
+                <section class="cart-details-info">
+                    <section class="cart-details-info-title">Ваш заказ</section>
+                    <section class="cart-details-info-item first">
+                        <section class="cart-details-info-item-text">Товаров:</section>
+                        <section class="cart-details-info-item-data">{{totalCount}}</section>
+                    </section>
+                    <section class="cart-details-info-item">
+                        <section class="cart-details-info-item-text">Общая стоимость:</section>
+                        <section class="cart-details-info-item-data">{{totalAmount}} BYN</section>
+                    </section>
+                    <section class="cart-details-info-delivery">* без учета доставки</section>
+                </section>
+
+                <section class="cart-details-actions">
+                    <button class="button button-transparent" routerLink="/catalog">Продолжить покупки</button>
+                    <button class="button" routerLink="/order">Оформить заказ</button>
+                </section>
+            </section>
+        </section>
+
+
+        <section class="extra-products">
+            <section class="carousel-header">
+                <section class="carousel-title">С этими товарами также покупают</section>
+                <section class="carousel-arrows">
+                    <a class="move-backward" (click)="owlCar.prev()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.5561 15C10.4013 15 10.2465 14.9435 10.1243 14.8224L4.8127 9.55746C3.94915 8.70151 3.94915 7.29647 4.8127 6.44052L10.1243 1.17563C10.3606 0.941456 10.7516 0.941456 10.9879 1.17563C11.2241 1.40981 11.2241 1.7974 10.9879 2.03158L5.67624 7.29647C5.2852 7.68407 5.2852 8.31392 5.67624 8.70151L10.9879 13.9664C11.2241 14.2006 11.2241 14.5882 10.9879 14.8224C10.8657 14.9354 10.7109 15 10.5561 15Z"
+                                fill="#202B21" />
+                        </svg>
+                    </a>
+                    <a class="move-forward" (click)="owlCar.next()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5.44392 1C5.59871 1 5.75349 1.05652 5.87569 1.17765L11.1873 6.44254C12.0508 7.29849 12.0508 8.70353 11.1873 9.55948L5.87569 14.8244C5.63944 15.0585 5.2484 15.0585 5.01215 14.8244C4.7759 14.5902 4.7759 14.2026 5.01215 13.9684L10.3238 8.70353C10.7148 8.31593 10.7148 7.68608 10.3238 7.29849L5.01215 2.0336C4.7759 1.79942 4.7759 1.41182 5.01215 1.17765C5.13435 1.0646 5.28914 1 5.44392 1Z"
+                                fill="#202B21" />
+                        </svg>
+                    </a>
+                </section>
+            </section>
+
+            <section class="carousel-items">
+                <owl-carousel-o [options]="customOptions" #owlCar>
+                    <ng-template carouselSlide *ngFor="let product of extraProducts">
+                        <product-card [product]="product" [isLight]="true"></product-card>
+                    </ng-template>
+                </owl-carousel-o>
+            </section>
+        </section>
+    </section>
+</section>

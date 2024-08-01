@@ -5,6 +5,11 @@
   height: 498px;
   position: relative;
 
+  &.is-light {
+    height: auto;
+    cursor: pointer;
+  }
+
   .product-card-favorite {
     position: absolute;
     top: 12px;
