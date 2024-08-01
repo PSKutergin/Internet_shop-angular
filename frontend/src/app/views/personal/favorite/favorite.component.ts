@@ -28,6 +28,16 @@ export class FavoriteComponent implements OnInit {
       });
   }
 
-  removeFromFavorites(id: string): void { }
+  removeFromFavorites(id: string): void {
+    this.favoriteService.removeFavorite(id)
+      .subscribe((data: DefaultResponseType) => {
+        if (data.error) {
+          // .... 
+          throw new Error(data.message);
+        }
+
+        this.favorites = this.favorites.filter(favorite => favorite.id !== id);
+      });
+  }
 
 }

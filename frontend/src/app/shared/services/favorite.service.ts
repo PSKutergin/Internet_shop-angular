@@ -13,10 +13,14 @@ export class FavoriteService {
   constructor(private http: HttpClient) { }
 
   getFavorites(): Observable<FavoriteType[] | DefaultResponseType> {
-    return this.http.get<FavoriteType[] | DefaultResponseType>(environment.api + 'favorite');
+    return this.http.get<FavoriteType[] | DefaultResponseType>(environment.api + 'favorites');
+  }
+
+  addFavorite(productId: string): Observable<FavoriteType | DefaultResponseType> {
+    return this.http.post<FavoriteType | DefaultResponseType>(environment.api + 'favorites', { productId });
   }
 
   removeFavorite(productId: string): Observable<DefaultResponseType> {
-    return this.http.delete<DefaultResponseType>(environment.api + 'favorite', { body: { productId } });
+    return this.http.delete<DefaultResponseType>(environment.api + 'favorites', { body: { productId } });
   }
 }

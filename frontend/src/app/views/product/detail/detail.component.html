@@ -103,13 +103,21 @@
                 </section>
 
                 <section class="detail-info-actions">
-                    <button class="button button-transparent button-icon">
-                        <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button class="button button-transparent button-icon" (click)="updateToFavorites()">
+                        <svg *ngIf="!product.isInFavorite" width="17" height="15" viewBox="0 0 17 15" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8.5 14.6814C8.2693 14.6814 8.04605 14.6516 7.86 14.5846C5.01721 13.6098 0.5 10.1493 0.5 5.03674C0.5 2.43209 2.60605 0.318604 5.19581 0.318604C6.45349 0.318604 7.6293 0.809766 8.5 1.68791C9.3707 0.809766 10.5465 0.318604 11.8042 0.318604C14.394 0.318604 16.5 2.43953 16.5 5.03674C16.5 10.1567 11.9828 13.6098 9.14 14.5846C8.95395 14.6516 8.7307 14.6814 8.5 14.6814ZM5.19581 1.43488C3.22372 1.43488 1.61628 3.04977 1.61628 5.03674C1.61628 10.1195 6.50558 12.9474 8.22465 13.5353C8.3586 13.58 8.64884 13.58 8.78279 13.5353C10.4944 12.9474 15.3912 10.127 15.3912 5.03674C15.3912 3.04977 13.7837 1.43488 11.8116 1.43488C10.6805 1.43488 9.63116 1.96325 8.95395 2.8786C8.74558 3.16139 8.2693 3.16139 8.06093 2.8786C7.36884 1.95581 6.32698 1.43488 5.19581 1.43488Z"
                                 fill="#6CAC72" />
                         </svg>
-                        <span>В избранное</span>
+                        <svg *ngIf="product.isInFavorite" width="16" height="15" viewBox="0 0 16 15" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 14.3628C7.7693 14.3628 7.54605 14.333 7.36 14.266C4.51721 13.2912 0 9.8307 0 4.71814C0 2.11349 2.10605 0 4.69581 0C5.95349 0 7.1293 0.491163 8 1.3693C8.8707 0.491163 10.0465 0 11.3042 0C13.894 0 16 2.12093 16 4.71814C16 9.83814 11.4828 13.2912 8.64 14.266C8.45395 14.333 8.2307 14.3628 8 14.3628Z"
+                                fill="#6CAC72" />
+                        </svg>
+                        <span *ngIf="!product.isInFavorite">В избранное</span>
+                        <span *ngIf="product.isInFavorite">В избранном</span>
                     </button>
                     <button class="button" *ngIf="!product.countInCart" (click)="addToCart()">В корзину</button>
                     <button class="button button-transparent button-in-cart" *ngIf="product.countInCart"

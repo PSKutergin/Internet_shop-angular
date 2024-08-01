@@ -2,10 +2,15 @@
     <section class="container">
         <section class="favorite-title">Избранное</section>
 
-        <section class="favorite-products">
+        <section class="favorite-empty" *ngIf="!favorites || (favorites && favorites.length === 0)">
+            <section class="">Ваш список избранных пуст</section>
+            <button class="button" routerLink="/catalog">Перейти в каталог</button>
+        </section>
+
+        <section class="favorite-products" *ngIf="favorites && favorites.length > 0">
             <section class="favorite-product" *ngFor="let product of favorites">
                 <section class="favorite-product-image"
-                    style="background-image: url({`${serverStaticPath}${product.image}`})">
+                    style="background-image: url({{serverStaticPath + product.image}})">
                 </section>
                 <section class="favorite-product-name">{{product.name}}</section>
                 <section class="favorite-product-price">{{product.price}} BYN</section>

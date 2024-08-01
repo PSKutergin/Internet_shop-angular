@@ -12,5 +12,6 @@ export type ProductType = {
     diameter: string,
     url: string,
     type: CategoryType,
-    countInCart?: number
+    countInCart?: number,
+    isInFavorite?: boolean
 }

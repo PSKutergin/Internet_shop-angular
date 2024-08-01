@@ -13,6 +13,20 @@
     }
   }
 
+  .favorite-empty {
+    margin-top: 20px;
+    margin-bottom: 100px;
+
+    section {
+      font-size: 16px;
+    }
+
+    .button {
+      width: 255px;
+      margin-top: 10px;
+    }
+  }
+
   .favorite-products {
     .favorite-product {
       padding-top: 15px;
