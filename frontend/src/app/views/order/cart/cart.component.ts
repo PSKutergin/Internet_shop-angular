@@ -3,6 +3,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { CartType } from 'src/app/types/cart.type';
+import { DefaultResponseType } from 'src/app/types/default-response.type';
 import { ProductType } from 'src/app/types/product.type';
 import { environment } from 'src/environments/environment';
 
@@ -52,8 +53,12 @@ export class CartComponent implements OnInit {
       .subscribe((data: ProductType[]) => this.extraProducts = data);
 
     this.cartService.getCart()
-      .subscribe((data: CartType) => {
-        this.cart = data;
+      .subscribe((data: CartType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
+        this.cart = data as CartType;
         this.calculateTotal();
       });
   }
@@ -72,8 +77,12 @@ export class CartComponent implements OnInit {
   updateCount(productId: string, count: number): void {
     if (this.cart) {
       this.cartService.updateCart(productId, count)
-        .subscribe((data: CartType) => {
-          this.cart = data;
+        .subscribe((data: CartType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            throw new Error((data as DefaultResponseType).message);
+          }
+
+          this.cart = (data as CartType);
           this.calculateTotal();
         });
     }

@@ -48,8 +48,12 @@ export class CatalogComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.getCart()
-      .subscribe((data: CartType) => {
-        this.cart = data;
+      .subscribe((data: CartType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
+        this.cart = data as CartType;
 
         if (this.authService.getIsLoggedIn()) {
           this.favoriteService.getFavorites()

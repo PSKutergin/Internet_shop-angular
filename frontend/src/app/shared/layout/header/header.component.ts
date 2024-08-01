@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { CategoryWithTypeType } from 'src/app/types/category-with-type.type';
 import { CartService } from '../../services/cart.service';
+import { DefaultResponseType } from 'src/app/types/default-response.type';
 
 @Component({
   selector: 'app-header',
@@ -26,8 +27,12 @@ export class HeaderComponent implements OnInit {
     })
 
     this.cartService.getCountCart()
-      .subscribe((data) => {
-        this.count = data.count
+      .subscribe((data: { count: number } | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
+        this.count = (data as { count: number }).count
       })
 
     this.cartService.count$
