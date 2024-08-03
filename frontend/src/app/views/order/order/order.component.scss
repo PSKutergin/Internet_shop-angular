@@ -1,0 +1,195 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+.order {
+  padding-top: 86px;
+  padding-bottom: 107px;
+
+  .container {
+    .order-title {
+      @include head-lora-32;
+    }
+
+    .order-info {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+
+      .order-form {
+        max-width: 646px;
+
+        .order-form-block {
+          margin-bottom: 30px;
+
+          .order-form-label {
+            margin-bottom: 20px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: $gray-text-color;
+          }
+
+          .order-form-types {
+            display: flex;
+            align-items: center;
+            max-width: 340px;
+            border: 1px solid #519157;
+            border-radius: 3px;
+            text-align: center;
+            font-size: 18px;
+            color: $gray-text-color;
+
+            .order-form-type-item {
+              cursor: pointer;
+              padding: 13px 35px;
+              background: transparent;
+
+              &.active {
+                background: #519157;
+                color: #fff;
+              }
+            }
+          }
+
+          .order-form-inputs {
+            display: grid;
+            gap: 8px;
+
+            input[type="text"] {
+              height: 53px;
+            }
+
+            &.personal-data-inputs {
+              grid-template-columns: repeat(3, 210px);
+            }
+
+            &.address-inputs {
+              grid-template-columns: repeat(2, 125px) 162px;
+              grid-template-rows: repeat(2, 1fr);
+
+              grid-template-areas:
+                "street street street"
+                "house entrance apartment";
+
+              .street {
+                grid-area: street;
+              }
+
+              .house {
+                grid-area: house;
+              }
+
+              .entrance {
+                grid-area: entrance;
+              }
+
+              .apartment {
+                grid-area: apartment;
+              }
+            }
+          }
+
+          .order-form-radio {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .order-form-radio-block {
+              label {
+                color: $gray-text-color;
+                font-size: 16px;
+              }
+
+              input:checked {
+                + label {
+                  font-family: "Montserrat", sans-serif;
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .order-details {
+        width: 422px;
+
+        .order-details-info {
+          background: #e7f1e8;
+          border-radius: 5px;
+          padding: 40px;
+          margin-bottom: 14px;
+
+          .order-details-info-title {
+            font-family: "Lora", sans-serif;
+            font-weight: 400;
+            font-size: 26px;
+            color: $green-text-color;
+            margin-bottom: 20px;
+          }
+
+          .order-details-info-item {
+            display: flex;
+            align-items: center;
+            color: $gray-text-color;
+            margin-bottom: 10px;
+
+            .order-details-info-item-text {
+              font-size: 16px;
+              margin-right: 12px;
+            }
+
+            .order-details-info-item-data {
+              font-family: "Montserrat", sans-serif;
+              font-weight: 500;
+              font-size: 20px;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+
+              .order-details-info-item-text,
+              .order-details-info-item-data {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.order-popup {
+  padding: 100px 70px 220px;
+  position: relative;
+  text-align: center;
+  color: $green-text-color;
+  background-image: url("../../../../assets/images/page/order-popup.png");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+
+  .order-popup-close {
+    position: absolute;
+    cursor: pointer;
+    top: 30px;
+    right: 30px;
+  }
+
+  .order-popup-title {
+    @include head-lora-32;
+    margin-bottom: 40px;
+  }
+
+  .order-popup-content {
+    p {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+  }
+}

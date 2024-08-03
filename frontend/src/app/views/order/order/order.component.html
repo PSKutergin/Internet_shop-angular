@@ -1,1 +1,133 @@
-<p>order works!</p>
+<section class="order">
+    <section class="container">
+        <section class="order-title">Оформление вашего заказа</section>
+
+        <section class="order-info">
+            <section class="order-form" [formGroup]="orderForm">
+                <section class="order-form-block">
+                    <section class="order-form-label">Выберите способ доставки</section>
+                    <section class="order-form-types">
+                        <section class="order-form-type-item" [class.active]="deliveryType === deliveryTypes.delivery"
+                            (click)="changeDeliveryType(deliveryTypes.delivery)">
+                            Курьером
+                        </section>
+                        <section class="order-form-type-item" [class.active]="deliveryType === deliveryTypes.self"
+                            (click)="changeDeliveryType(deliveryTypes.self)">
+                            Самовывоз
+                        </section>
+                    </section>
+                </section>
+
+                <section class="order-form-block">
+                    <section class="order-form-label">Заполните личные данные</section>
+                    <section class="order-form-inputs personal-data-inputs">
+                        <input type="text" class="input" placeholder="Имя"
+                            [ngStyle]="{'border-color': firstName?.invalid && (firstName?.touched || firstName?.dirty) ? 'tomato' : ''}"
+                            formControlName="firstName">
+                        <input type="text" class="input" placeholder="Фамилия"
+                            [ngStyle]="{'border-color': lastName?.invalid && (lastName?.touched || lastName?.dirty) ? 'tomato' : ''}"
+                            formControlName="lastName">
+                        <input type="text" class="input" placeholder="Отчество"
+                            [ngStyle]="{'border-color': fatherName?.invalid && (fatherName?.touched || fatherName?.dirty) ? 'tomato' : ''}"
+                            formControlName="fatherName">
+                        <input type="text" class="input" placeholder="Телефон"
+                            [ngStyle]="{'border-color': phone?.invalid && (phone?.touched || phone?.dirty) ? 'tomato' : ''}"
+                            formControlName="phone">
+                        <input type="text" class="input" placeholder="E-mail"
+                            [ngStyle]="{'border-color': email?.invalid && (email?.touched || email?.dirty) ? 'tomato' : ''}"
+                            formControlName="email">
+                    </section>
+                </section>
+
+                <section class="order-form-block" *ngIf="deliveryType === deliveryTypes.delivery">
+                    <section class="order-form-label">Заполните адрес доставки</section>
+                    <section class="order-form-inputs address-inputs">
+                        <input type="text" class="input street" placeholder="Улица"
+                            [ngStyle]="{'border-color': street?.invalid && (street?.touched || street?.dirty) ? 'tomato' : ''}"
+                            formControlName="street">
+                        <input type="text" class="input house" placeholder="№ дома"
+                            [ngStyle]="{'border-color': house?.invalid && (house?.touched || house?.dirty) ? 'tomato' : ''}"
+                            formControlName="house">
+                        <input type="text" class="input entrance" placeholder="Подъезд"
+                            [ngStyle]="{'border-color': entrance?.invalid && (entrance?.touched || entrance?.dirty) ? 'tomato' : ''}"
+                            formControlName="entrance">
+                        <input type="text" class="input apartment" placeholder="№ квартиры"
+                            [ngStyle]="{'border-color': apartment?.invalid && (apartment?.touched || apartment?.dirty) ? 'tomato' : ''}"
+                            formControlName="apartment">
+                    </section>
+                </section>
+
+                <section class="order-form-block">
+                    <section class="order-form-label">Выберите способ оплаты</section>
+                    <section class="order-form-radio">
+                        <section class="order-form-radio-block">
+                            <input type="radio" id="card" value="{{paymentTypes.cardOnline}}"
+                                formControlName="paymentType">
+                            <label for="card">Оплата банковской картой в интернет-магазине</label>
+                        </section>
+                        <section class="order-form-radio-block">
+                            <input type="radio" id="cashless" value="{{paymentTypes.cardToCourier}}"
+                                formControlName="paymentType">
+                            <label for="cashless">Безналичный расчет при получении</label>
+                        </section>
+                        <section class="order-form-radio-block">
+                            <input type="radio" id="cash" value="{{paymentTypes.cashToCourier}}"
+                                formControlName="paymentType">
+                            <label for="cash">Наличный расчет при получении</label>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="order-form-block">
+                    <section class="order-form-label">Комментарий к заказу (необязательно)</section>
+                    <section class="order-form-inputs">
+                        <textarea cols="30" rows="5" placeholder="Оставьте свой комментарий..." class="input"
+                            [ngStyle]="{'border-color': comment?.invalid && (comment?.touched || comment?.dirty) ? 'tomato' : ''}"
+                            formControlName="comment">
+                        </textarea>
+                    </section>
+                </section>
+            </section>
+
+            <section class="order-details">
+                <section class="order-details-info">
+                    <section class="order-details-info-title">Ваш заказ</section>
+                    <section class="order-details-info-item">
+                        <section class="order-details-info-item-text">Товаров:</section>
+                        <section class="order-details-info-item-data">{{totalCount}}</section>
+                    </section>
+                    <section class="order-details-info-item">
+                        <section class="order-details-info-item-text">Общая стоимость:</section>
+                        <section class="order-details-info-item-data">{{totalAmount}} BYN</section>
+                    </section>
+                    <section class="order-details-info-item">
+                        <section class="order-details-info-item-text">Стоимость доставки:</section>
+                        <section class="order-details-info-item-data">10 BYN</section>
+                    </section>
+                    <section class="order-details-info-item">
+                        <section class="order-details-info-item-text">Итоговая стоимость:</section>
+                        <section class="order-details-info-item-data">{{totalAmount + 10}} BYN</section>
+                    </section>
+                </section>
+                <button class="button" (click)="createOrder()">Подтвердить заказ</button>
+            </section>
+        </section>
+    </section>
+</section>
+
+<ng-template #popup>
+    <section class="order-popup">
+        <section class="order-popup-title">Благодарим за заказ!</section>
+        <section class="order-popup-content">
+            <p>Ваш заказ оформлен.</p>
+            <p>Вся информация о заказе была выслана вам на почту.</p>
+            <p>Курьер свяжется с вами за два часа до доставки товара.</p>
+        </section>
+        <section class="order-popup-close" (click)="closePopup()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.935622" y1="0.649902" x2="12.9564" y2="12.6707" stroke="#A8ABA7" stroke-linecap="round" />
+                <line x1="12.9238" y1="0.629714" x2="0.903013" y2="12.6505" stroke="#A8ABA7" stroke-linecap="round" />
+            </svg>
+        </section>
+    </section>
+</ng-template>
