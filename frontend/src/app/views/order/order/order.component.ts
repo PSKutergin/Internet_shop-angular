@@ -4,13 +4,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { OrderService } from 'src/app/shared/services/order.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { CartType } from 'src/app/types/cart.type';
 import { DefaultResponseType } from 'src/app/types/default-response.type';
 import { DeliveryType } from 'src/app/types/delivery.type';
 import { OrderType } from 'src/app/types/order.type';
 import { PaymentType } from 'src/app/types/payment.type';
+import { UserInfoType } from 'src/app/types/user-info.type';
 
 @Component({
   selector: 'app-order',
@@ -43,8 +46,10 @@ export class OrderComponent implements OnInit {
   dialogRef: MatDialogRef<any> | null = null;
 
   constructor(
+    private authService: AuthService,
     private cartService: CartService,
     private orderService: OrderService,
+    private userService: UserService,
     private router: Router,
     private _snackBar: MatSnackBar,
     private dialog: MatDialog,
@@ -68,6 +73,18 @@ export class OrderComponent implements OnInit {
         }
         this.calculateTotal();
       });
+
+    if (this.authService.getIsLoggedIn()) {
+      this.userService.getUserInfo()
+        .subscribe((data: UserInfoType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            throw new Error((data as DefaultResponseType).message)
+          }
+
+          this.orderForm.patchValue(data as UserInfoType);
+          this.deliveryType = (data as UserInfoType).deliveryType || DeliveryType.delivery;
+        })
+    }
   }
 
   get firstName() {

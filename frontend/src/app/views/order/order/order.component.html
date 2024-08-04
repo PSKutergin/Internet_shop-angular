@@ -3,24 +3,24 @@
         <section class="order-title">Оформление вашего заказа</section>
 
         <section class="order-info">
-            <section class="order-form" [formGroup]="orderForm">
-                <section class="order-form-block">
-                    <section class="order-form-label">Выберите способ доставки</section>
-                    <section class="order-form-types">
-                        <section class="order-form-type-item" [class.active]="deliveryType === deliveryTypes.delivery"
+            <section class="data-form" [formGroup]="orderForm">
+                <section class="data-form-block">
+                    <section class="data-form-label">Выберите способ доставки</section>
+                    <section class="data-form-types">
+                        <section class="data-form-type-item" [class.active]="deliveryType === deliveryTypes.delivery"
                             (click)="changeDeliveryType(deliveryTypes.delivery)">
                             Курьером
                         </section>
-                        <section class="order-form-type-item" [class.active]="deliveryType === deliveryTypes.self"
+                        <section class="data-form-type-item" [class.active]="deliveryType === deliveryTypes.self"
                             (click)="changeDeliveryType(deliveryTypes.self)">
                             Самовывоз
                         </section>
                     </section>
                 </section>
 
-                <section class="order-form-block">
-                    <section class="order-form-label">Заполните личные данные</section>
-                    <section class="order-form-inputs personal-data-inputs">
+                <section class="data-form-block">
+                    <section class="data-form-label">Заполните личные данные</section>
+                    <section class="data-form-inputs personal-data-inputs">
                         <input type="text" class="input" placeholder="Имя"
                             [ngStyle]="{'border-color': firstName?.invalid && (firstName?.touched || firstName?.dirty) ? 'tomato' : ''}"
                             formControlName="firstName">
@@ -39,9 +39,9 @@
                     </section>
                 </section>
 
-                <section class="order-form-block" *ngIf="deliveryType === deliveryTypes.delivery">
-                    <section class="order-form-label">Заполните адрес доставки</section>
-                    <section class="order-form-inputs address-inputs">
+                <section class="data-form-block" *ngIf="deliveryType === deliveryTypes.delivery">
+                    <section class="data-form-label">Заполните адрес доставки</section>
+                    <section class="data-form-inputs address-inputs">
                         <input type="text" class="input street" placeholder="Улица"
                             [ngStyle]="{'border-color': street?.invalid && (street?.touched || street?.dirty) ? 'tomato' : ''}"
                             formControlName="street">
@@ -57,20 +57,20 @@
                     </section>
                 </section>
 
-                <section class="order-form-block">
-                    <section class="order-form-label">Выберите способ оплаты</section>
-                    <section class="order-form-radio">
-                        <section class="order-form-radio-block">
+                <section class="data-form-block">
+                    <section class="data-form-label">Выберите способ оплаты</section>
+                    <section class="data-form-radio">
+                        <section class="data-form-radio-block">
                             <input type="radio" id="card" value="{{paymentTypes.cardOnline}}"
                                 formControlName="paymentType">
                             <label for="card">Оплата банковской картой в интернет-магазине</label>
                         </section>
-                        <section class="order-form-radio-block">
+                        <section class="data-form-radio-block">
                             <input type="radio" id="cashless" value="{{paymentTypes.cardToCourier}}"
                                 formControlName="paymentType">
                             <label for="cashless">Безналичный расчет при получении</label>
                         </section>
-                        <section class="order-form-radio-block">
+                        <section class="data-form-radio-block">
                             <input type="radio" id="cash" value="{{paymentTypes.cashToCourier}}"
                                 formControlName="paymentType">
                             <label for="cash">Наличный расчет при получении</label>
@@ -78,9 +78,9 @@
                     </section>
                 </section>
 
-                <section class="order-form-block">
-                    <section class="order-form-label">Комментарий к заказу (необязательно)</section>
-                    <section class="order-form-inputs">
+                <section class="data-form-block">
+                    <section class="data-form-label">Комментарий к заказу (необязательно)</section>
+                    <section class="data-form-inputs">
                         <textarea cols="30" rows="5" placeholder="Оставьте свой комментарий..." class="input"
                             [ngStyle]="{'border-color': comment?.invalid && (comment?.touched || comment?.dirty) ? 'tomato' : ''}"
                             formControlName="comment">
