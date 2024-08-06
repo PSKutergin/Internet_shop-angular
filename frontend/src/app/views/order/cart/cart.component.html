@@ -1,10 +1,12 @@
 <section class="cart" *ngIf="cart">
     <section class="container">
         <section class="cart-title">Корзина</section>
+
         <section class="cart-empty" *ngIf="!cart || cart.items.length === 0">
             <section class="">Ваша корзина пуста</section>
             <button class="button" routerLink="/catalog">Перейти в каталог</button>
         </section>
+
         <section class="cart-info" *ngIf="cart && cart.items.length > 0">
             <section class="cart-products">
                 <section class="cart-product" *ngFor="let cartProduct of cart.items">

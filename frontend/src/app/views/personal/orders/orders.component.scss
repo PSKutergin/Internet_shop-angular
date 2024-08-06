@@ -1,0 +1,103 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/personal";
+
+.orders {
+  padding-top: 56px;
+  padding-bottom: 156px;
+
+  .container {
+    font-size: 16px;
+
+    .orders-title {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      color: $gray-text-color;
+      margin-bottom: 14px;
+    }
+
+    .orders-title-additional {
+      color: $gray-text-color;
+      margin-bottom: 67px;
+    }
+
+    .orders-empty {
+      margin-top: 20px;
+      margin-bottom: 100px;
+
+      section {
+        font-size: 16px;
+      }
+
+      .button {
+        width: 255px;
+        margin-top: 10px;
+      }
+    }
+
+    .orders-list {
+      .order-list-item {
+        border-bottom: 1px solid #e7f1e8;
+        padding-bottom: 46px;
+        margin-bottom: 47px;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+
+        &:last-child {
+          border-bottom: 0;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+
+        .order-list-item-number {
+          font-size: 20px;
+          color: #111;
+          text-decoration-line: underline;
+          width: 297px;
+          margin-right: 20px;
+        }
+
+        .order-list-item-products {
+          width: 509px;
+          margin-right: 20px;
+          color: #adadad;
+
+          .order-list-item-products-count {
+            margin-bottom: 12px;
+          }
+
+          .order-list-item-product-list {
+            tr {
+              td {
+                &:first-child {
+                  padding-left: 10px;
+                  padding-right: 20px;
+                }
+              }
+            }
+          }
+        }
+
+        .order-list-item-status {
+          padding: 8px 24px;
+          text-align: center;
+          border-radius: 50px;
+          border: 1px solid #456f49;
+          background: transparent;
+          color: #456f49;
+        }
+
+        .order-list-item-price {
+          width: 186px;
+          text-align: right;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 600;
+          font-size: 22px;
+          color: $gray-text-color;
+        }
+      }
+    }
+  }
+}

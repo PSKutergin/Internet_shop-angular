@@ -1,1 +1,42 @@
-<p>orders works!</p>
+<section class="orders">
+    <section class="container">
+        <section class="personal-title">Личный кабинет</section>
+
+        <section class="personal-pages-selector">
+            <section class="personal-page" routerLink="/profile">Личные данные</section>
+            <section class="personal-page active">Ваши заказы</section>
+        </section>
+
+        <section class="orders-title">Ваши заказы</section>
+        <section class="orders-title-additional">Здесь отображается история ваших заказов.</section>
+
+        <section class="orders-empty" *ngIf="!orders || orders.length === 0">
+            <section class="">У вас еще нет заказов</section>
+            <button class="button" routerLink="/catalog">Перейти в каталог</button>
+        </section>
+
+        <section class="orders-list" *ngIf="orders && orders.length > 0">
+            <section class="order-list-item" *ngFor="let order of orders; let i = index">
+                <section class="order-list-item-number">Заказ №{{i + 1}}</section>
+
+                <section class="order-list-item-products" *ngIf="order.items && order.items.length > 0">
+                    <section class="order-list-item-products-count">Кол-во товаров: {{order.items.length}}</section>
+
+                    <table class="order-list-item-product-list">
+                        <tr *ngFor="let item of order.items">
+                            <td>&#183; {{item.name}}</td>
+                            <td>{{item.quantity}} шт.</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="order-list-item-status" style="border-color: {{order.color}}; color: {{order.color}}">
+                    {{order.statusRus}}
+                </section>
+
+                <section class="order-list-item-price">{{order.totalAmount}} BYN</section>
+            </section>
+        </section>
+
+    </section>
+</section>
