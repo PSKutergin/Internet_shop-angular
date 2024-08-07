@@ -8,6 +8,8 @@ import { DefaultResponseType } from 'src/app/types/default-response.type';
 import { ProductService } from '../../services/product.service';
 import { ProductType } from 'src/app/types/product.type';
 import { environment } from 'src/environments/environment';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +18,8 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
+  searchField = new FormControl();
   showedSearch: boolean = false;
-  searchValue: string = '';
   count: number = 0;
   isLogged: boolean = false;
   products: ProductType[] = [];
@@ -35,6 +37,22 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchField.valueChanges
+      .pipe(
+        debounceTime(500)
+      )
+      .subscribe((value: string) => {
+        if (value && value.length > 2) {
+          this.productService.searchProducts(value)
+            .subscribe((data: ProductType[]) => {
+              this.products = data;
+              this.showedSearch = true;
+            })
+        } else {
+          this.products = [];
+        }
+      })
+
     this.authService.isLogged$.subscribe((isLogged: boolean) => {
       this.isLogged = isLogged;
     })
@@ -73,23 +91,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  changeSearchValue(newValue: string): void {
-    this.searchValue = newValue;
-
-    if (this.searchValue && this.searchValue.length > 2) {
-      this.productService.searchProducts(this.searchValue)
-        .subscribe((data: ProductType[]) => {
-          this.products = data;
-          this.showedSearch = true;
-        })
-    } else {
-      this.products = [];
-    }
-  }
-
   selectProduct(url: string): void {
     this.router.navigate(['/product/' + url]);
-    this.searchValue = '';
+    this.searchField.setValue('');
     this.products = [];
   }
 

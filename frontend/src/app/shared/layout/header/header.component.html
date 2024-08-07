@@ -98,8 +98,7 @@
                 </section>
 
                 <section class="header-bottom-search">
-                    <input type="text" placeholder="Начните искать" [ngModel]="searchValue"
-                        (ngModelChange)="changeSearchValue($event)">
+                    <input type="text" placeholder="Начните искать" [formControl]="searchField">
 
 
                     <ul class="search-products" *ngIf="showedSearch && products && products.length > 0">
