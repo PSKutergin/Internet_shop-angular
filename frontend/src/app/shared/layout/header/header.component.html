@@ -98,7 +98,18 @@
                 </section>
 
                 <section class="header-bottom-search">
-                    <input type="text" placeholder="Начните искать">
+                    <input type="text" placeholder="Начните искать" [ngModel]="searchValue"
+                        (ngModelChange)="changeSearchValue($event)">
+
+
+                    <ul class="search-products" *ngIf="showedSearch && products && products.length > 0">
+                        <li class="search-product" *ngFor="let product of products"
+                            (click)="selectProduct(product.url)">
+                            <section class="search-product-image"
+                                style="background-image: url({{serverStaticPath + product.image}});"></section>
+                            <section class="search-product-name">{{product.name}}</section>
+                        </li>
+                    </ul>
                 </section>
             </section>
         </section>
