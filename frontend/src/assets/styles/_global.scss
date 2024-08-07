@@ -211,3 +211,8 @@ a.button {
 .mat-dialog-container {
   padding: 0 !important;
 }
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #648f64;
+}
