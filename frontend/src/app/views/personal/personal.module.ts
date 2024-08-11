@@ -7,13 +7,15 @@ import { InfoComponent } from './info/info.component';
 import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FavoriteItemComponent } from './favorite-item/favorite-item.component';
 
 
 @NgModule({
   declarations: [
     FavoriteComponent,
     InfoComponent,
-    OrdersComponent
+    OrdersComponent,
+    FavoriteItemComponent
   ],
   imports: [
     CommonModule,

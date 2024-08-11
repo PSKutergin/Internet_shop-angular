@@ -23,6 +23,7 @@ export class DetailComponent implements OnInit {
   products: ProductType[] = [];
   product!: ProductType;
   serverStaticPath = environment.serverStaticPath
+  isLogged: boolean = false;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -60,6 +61,8 @@ export class DetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLogged = this.authService.getIsLoggedIn();
+
     this.activatedRoute.params.subscribe((params) => {
       this.productService.getProduct(params['url'])
         .subscribe((data: ProductType) => {

@@ -8,24 +8,8 @@
         </section>
 
         <section class="favorite-products" *ngIf="favorites && favorites.length > 0">
-            <section class="favorite-product" *ngFor="let product of favorites">
-                <section class="favorite-product-image"
-                    style="background-image: url({{serverStaticPath + product.image}})">
-                </section>
-                <section class="favorite-product-name">{{product.name}}</section>
-                <section class="favorite-product-price">{{product.price}} BYN</section>
-                <section class="favorite-product-action">
-                    <button class="button" routerLink="/product/{{product.url}}">Открыть</button>
-                </section>
-                <section class="favorite-product-remove" (click)="removeFromFavorites(product.id)">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0.935622" y1="0.649902" x2="12.9564" y2="12.6707" stroke="#A8ABA7"
-                            stroke-linecap="round" />
-                        <line x1="12.9238" y1="0.629958" x2="0.903013" y2="12.6508" stroke="#A8ABA7"
-                            stroke-linecap="round" />
-                    </svg>
-                </section>
-            </section>
+            <favorite-item *ngFor="let product of favorites" [countInCart]="product.countInCart" [product]="product"
+                (removeFavoriteEvent)="removeFavorite($event)"></favorite-item>
         </section>
     </section>
 </section>

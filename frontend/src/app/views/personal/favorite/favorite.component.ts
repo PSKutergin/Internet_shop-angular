@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { FavoriteService } from 'src/app/shared/services/favorite.service';
+import { CartType } from 'src/app/types/cart.type';
 import { DefaultResponseType } from 'src/app/types/default-response.type';
 import { FavoriteType } from 'src/app/types/favorite.type';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-favorite',
@@ -12,9 +13,8 @@ import { environment } from 'src/environments/environment';
 export class FavoriteComponent implements OnInit {
 
   favorites: FavoriteType[] = [];
-  serverStaticPath = environment.serverStaticPath;
 
-  constructor(private favoriteService: FavoriteService) { }
+  constructor(private cartService: CartService, private favoriteService: FavoriteService) { }
 
   ngOnInit(): void {
     this.favoriteService.getFavorites()
@@ -25,19 +25,43 @@ export class FavoriteComponent implements OnInit {
         }
 
         this.favorites = data as FavoriteType[]
+
+        this.processFavorite();
       });
   }
 
-  removeFromFavorites(id: string): void {
+  processFavorite(): void {
+    this.cartService.getCart()
+      .subscribe((data: CartType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
+        const cart = data as CartType;
+
+        if (this.favorites && cart && cart.items.length > 0) {
+          this.favorites = this.favorites.map((favorite) => {
+            if (cart) {
+              const productInCart = cart.items.find((item) => item.product.id === favorite.id);
+
+              if (productInCart) {
+                favorite.countInCart = productInCart.quantity;
+              }
+            }
+            return favorite
+          })
+        }
+      })
+  }
+
+  removeFavorite(id: string): void {
     this.favoriteService.removeFavorite(id)
       .subscribe((data: DefaultResponseType) => {
         if (data.error) {
-          // .... 
           throw new Error(data.message);
         }
 
         this.favorites = this.favorites.filter(favorite => favorite.id !== id);
       });
   }
-
 }

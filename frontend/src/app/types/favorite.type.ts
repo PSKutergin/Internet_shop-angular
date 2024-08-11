@@ -4,4 +4,5 @@ export type FavoriteType = {
     url: string,
     price: string,
     image: string,
+    countInCart?: number,
 }
