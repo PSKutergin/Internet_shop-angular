@@ -2,18 +2,26 @@ import { of } from "rxjs";
 import { CartService } from "./cart.service";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { TestBed } from "@angular/core/testing";
 
 describe('cart service', () => {
 
     let cartService: CartService;
-    let valueServiceSpy: jasmine.SpyObj<HttpClient>;
+    let httpServiceSpy: jasmine.SpyObj<HttpClient>;
     const countValue = 3;
 
     beforeEach(() => {
-        valueServiceSpy = jasmine.createSpyObj('HttpClient', ['get']);
-        valueServiceSpy.get.and.returnValue(of({ count: 3 }));
+        httpServiceSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        httpServiceSpy.get.and.returnValue(of({ count: 3 }));
 
-        cartService = new CartService(valueServiceSpy);
+        TestBed.configureTestingModule({
+            providers: [
+                CartService,
+                { provide: HttpClient, useValue: httpServiceSpy }
+            ]
+        })
+
+        cartService = TestBed.inject(CartService);
     })
 
     it('should emit new count value', (done: DoneFn) => {
@@ -27,7 +35,7 @@ describe('cart service', () => {
 
     it('should make http request for cart data', (done: DoneFn) => {
         cartService.getCart().subscribe(() => {
-            expect(valueServiceSpy.get).toHaveBeenCalledOnceWith(environment.api + 'cart', { withCredentials: true });
+            expect(httpServiceSpy.get).toHaveBeenCalledOnceWith(environment.api + 'cart', { withCredentials: true });
             done();
         })
     })
