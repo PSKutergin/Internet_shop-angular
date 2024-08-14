@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -37,7 +37,8 @@ export class CatalogComponent implements OnInit {
   cart: CartType | null = null;
   favoriteProducts: FavoriteType[] | null = null;
 
-  constructor(private productService: ProductService,
+  constructor(private elementRef: ElementRef,
+    private productService: ProductService,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private cartService: CartService,
@@ -172,8 +173,18 @@ export class CatalogComponent implements OnInit {
     this.router.navigate(['/catalog'], { queryParams: this.activeParams });
   }
 
-  toggleSorting(): void {
+  toggleSorting(event: Event): void {
     this.sortingOpen = !this.sortingOpen;
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    const targetElement = event.target as HTMLElement;
+
+    if (this.elementRef.nativeElement.contains(targetElement)) {
+      this.sortingOpen = false;
+    }
   }
 
   sort(sorting: string): void {
@@ -194,8 +205,13 @@ export class CatalogComponent implements OnInit {
   }
 
   openNextPage(): void {
-    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
-      this.activeParams.page++;
+    if (this.activeParams.page) {
+      if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+        this.activeParams.page++;
+        this.router.navigate(['/catalog'], { queryParams: this.activeParams });
+      }
+    } else {
+      this.activeParams.page = 2;
       this.router.navigate(['/catalog'], { queryParams: this.activeParams });
     }
   }

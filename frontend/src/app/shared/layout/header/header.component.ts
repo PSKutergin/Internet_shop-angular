@@ -56,15 +56,15 @@ export class HeaderComponent implements OnInit {
     this.authService.isLogged$
       .subscribe((isLogged: boolean) => {
         this.isLogged = isLogged;
-      })
 
-    this.cartService.getCountCart()
-      .subscribe((data: { count: number } | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message);
-        }
+        this.cartService.getCountCart()
+          .subscribe((data: { count: number } | DefaultResponseType) => {
+            if ((data as DefaultResponseType).error !== undefined) {
+              throw new Error((data as DefaultResponseType).message);
+            }
 
-        this.count = (data as { count: number }).count
+            this.count = (data as { count: number }).count
+          })
       })
 
     this.cartService.count$
